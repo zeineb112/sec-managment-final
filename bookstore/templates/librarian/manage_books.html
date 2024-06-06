@@ -1,0 +1,127 @@
+{% extends 'librarian/base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row" style="padding-top: 30px">
+            <div class="col-sm-1" style="color: red">
+            </div>
+
+            <div class="col-sm-20">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table text-primary"></i>
+                        Manage Request
+                    </div>
+                    <div class="card-body">
+                        <!-- Breadcrumbs -->
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example" style="font-size: 15px;" id="dataTable" class="table table-bordered"  width="150%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Ilot</th>
+                                                <th style=" white-space: nowrap;">Job</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Etat</th>
+                                                <th>UAP</th>
+                                                <th style="color: black; white-space: nowrap;">Nbre Pdt Controlé</th>
+                                                <th>Status</th>
+                                                <th style="color: black; white-space: nowrap;">Taken by</th>
+                                                <th>Begin</th>
+                                                <th>Finish</th>
+                                                <th>register</th>
+                                                <th>Finish</th>
+
+
+
+                                                
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if books %}
+                                                {% for book in books %}
+                                                    <tr>
+                                                        <td style="white-space: nowrap;">{{ book.title }}</td>
+                                                        <td>{% if book.is_publisher == True %}
+                                                            <p>1</p>
+                                                            {% elif book.is_publisher == False %}
+                                                            <p>2</p>
+                                                            {% endif %} 
+                                                        </td> 
+                                                        <td>{{ book.year }}</td>
+                                                        <td style=" white-space: nowrap;">{{ book.date }}</td>
+                                                        <td>{{ book.time }}</td>
+                                                        <td>
+                                                            {% if book.is_admin == True %}
+                                                            <p style="color: red; white-space: nowrap;">urgent</p>
+                                                            {% elif book.is_admin == False %}
+                                                            <p style="color: green; white-space: nowrap;">Normal</p>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ book.UAP }}</td>
+                                                        <td style="text-align: center;">{{ book.produit }}</td>
+                                                        {% if book.status %}
+                                                            <td style="color: green;">Completed </td>
+                                                        {% else %}
+                                                            <td style="color: orange; white-space: nowrap;">In Progress</td>
+                                                        {% endif %}
+                                                        <td style="color: red; white-space: nowrap;">{{ book.urgent }}</td>
+                                                        <td>{{ book.time2 }}</td>
+                                                        <td>{{ book.time1 }}</td>
+                                                        <form action="{% url 'update' book.pk %}" method="post">
+                                                            {% csrf_token %}
+                                                            <td>
+                                                                <a href="{% url 'cnbook' book.pk %}"><button type="button" class="btn btn-warning"> register</button></a>
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-success ms-1">Finished</button>
+                                                            </td>
+                                                        </form>
+                                                        
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+
+                                    {% if is_paginated %}
+                                        <ul class="pagination">
+                                            {% if page_obj.has_previous %}
+                                                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                                            {% else %}
+                                                <li class="disabled"><span>&laquo;</span></li>
+                                            {% endif %}
+                                            {% for i in paginator.page_range %}
+                                                {% if page_obj.number == i %}
+                                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                                {% else %}
+                                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if page_obj.has_next %}
+                                                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                                            {% else %}
+                                                <li class="disabled"><span>&raquo;</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
