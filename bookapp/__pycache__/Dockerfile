@@ -14,11 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Set environment variables
-ENV DJANGO_SETTINGS_MODULE=Django-Online-sdecManagement-System.settings
+ENV DJANGO_SETTINGS_MODULE=bookapp.settings
 ENV PYTHONUNBUFFERED=1
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
 # Run the application with gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "Django-Online-sdecManagement-System.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "bookapp.wsgi:application"]
