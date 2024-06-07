@@ -1,1 +1,0 @@
-web: gunicornDjango-Online-sdecManagement-System.wsgi:application
