@@ -76,19 +76,19 @@ WSGI_APPLICATION = 'bookapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-#DATABASES = {
-  #  'default': {
-  #      'ENGINE': 'mssql',
-   #     'NAME': 'bookapp',
-    #    'USER': 'sa',
-     #   'PASSWORD': 'zeineb12345',
-      #  'HOST': 'MSI\\SQLEXPRESS',  
-      #  'PORT': '',
-       # 'OPTIONS': {
-       # 'driver': 'ODBC Driver 17 for SQL Server',
-   #     },
-  #  }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'bookapp',
+        'USER': 'sa',
+        'PASSWORD': 'zeineb12345',
+        'HOST': 'MSI\\SQLEXPRESS',  
+        'PORT': '',
+        'OPTIONS': {
+        'driver': 'ODBC Driver 17 for SQL Server',
+    },
+}
+}
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
